@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %} 鞋宫-联系我们 {% endblock %}
+{% block custom_css %}
+    <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
+{% endblock %}
+
+
+
+{% block content %}
+    <main>
+
+        <!-- breadcrumb-area-start -->
+        <section class="breadcrumb-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- breadcrumb-area-end -->
+
+        <!-- contact-area start -->
+        <section class="contact-area pt-120 pb-90" data-background="assets/img/bg/bg-map.png">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-4 col-lg-4 col-md-4">
+                        <div class="contact text-center mb-30">
+                            <i class="fas fa-envelope"></i>
+                            <h3>联系邮箱</h3>
+                            <p>sneakerpalace_help@163.com</p>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4">
+                        <div class="contact text-center mb-30">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <h3>联系地址</h3>
+                            <p>浙江省温州市瓯海区温州大学生活区B区</p>
+                        </div>
+                    </div>
+                    <div class="col-xl-4  col-lg-4 col-md-4 ">
+                        <div class="contact text-center mb-30">
+                            <i class="fas fa-phone"></i>
+                            <h3>联系电话</h3>
+                            <p>暂无</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- contact-area end -->
+
+    </main>
+{% endblock %}

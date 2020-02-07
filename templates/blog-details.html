@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %} 鞋宫-潮流资讯 {% endblock %}
+{% block custom_css %}
+    <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
+{% endblock %}
+
+{% block content %}
+    <main>
+
+        <!-- breadcrumb-area-start -->
+        <section class="breadcrumb-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- breadcrumb-area-end -->
+
+        <!-- blog-area start -->
+        <div class="blog-area pt-100 pb-60">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <article class="postbox post format-image mb-40">
+                            <div class="postbox__text bg-none">
+                                <div class="post-meta mb-15">
+                                    <span><i class="far fa-calendar-check"></i> {{ blog_info.release_time }} </span>
+                                    <span><i class="far fa-comments"></i> 浏览次数 {{ blog_info.click_nums }} </span>
+                                </div>
+                                <h3 class="blog-title">
+                                    {{ blog_info.title }}
+                                </h3>
+                                <div class="post-text mb-20">
+                                    {% autoescape off %}
+                                        {{ blog_info.content }}
+                                    {% endautoescape %}
+                                </div>
+{#                                <div class="row mt-50">#}
+{#                                    <div class="col-xl-8 col-lg-8 col-md-8 mb-15">#}
+{#                                        <div class="blog-post-tag">#}
+{#                                            <span>Releted Tags</span>#}
+{#                                            <a href="#">organic</a>#}
+{#                                            <a href="#">Foods</a>#}
+{#                                            <a href="#">tasty</a>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <div class="col-xl-4 col-lg-4 col-md-4 mb-15">#}
+{#                                        <div class="blog-share-icon text-left text-md-right">#}
+{#                                            <span>Share: </span>#}
+{#                                            <a href="#"><i class="fab fa-facebook-f"></i></a>#}
+{#                                            <a href="#"><i class="fab fa-twitter"></i></a>#}
+{#                                            <a href="#"><i class="fab fa-instagram"></i></a>#}
+{#                                            <a href="#"><i class="fab fa-google-plus-g"></i></a>#}
+{#                                            <a href="#"><i class="fab fa-vimeo-v"></i></a>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+                            </div>
+                        </article>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="widget mb-40">
+                            <div class="widget-title-box mb-30">
+                                <span class="animate-border"></span>
+                                <h3 class="widget-title">其他热门资讯</h3>
+                            </div>
+                            <ul class="recent-posts">
+                                {% for blog in other_blog %}
+                                    <li>
+                                        <div class="widget-posts-image">
+                                            <a href="{% url 'blog:blog_detail' blog.id %}"><img src="{{ MEDIA_URL }}{{ blog.image }}" alt=""></a>
+                                        </div>
+                                        <div class="widget-posts-body">
+                                            <h6 class="widget-posts-title"><a href="{% url 'blog:blog_detail' blog.id %}">{{ blog.title }}</a></h6>
+                                            <div class="widget-posts-meta">{{ blog.release_time }}</div>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- blog-area end -->
+
+
+    </main>
+{% endblock %}
+
+{% block custom_js %}
+    <script type="text/javascript" charset="utf-8">
+        $(function () {
+            $("img.lazy").lazyload({effect: "fadeIn"});
+        });
+    </script>
+{% endblock %}

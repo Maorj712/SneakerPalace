@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %} 鞋宫-错误页面 {% endblock %}
+{% block custom_css %}
+    <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
+{% endblock %}
+
+{% block content %}
+    <main>
+
+        <!-- breadcrumb-area-start -->
+        <section class="breadcrumb-area" data-background="img/bg/page-title.png">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="breadcrumb-text text-center">
+                            <h1>404</h1>
+                            <ul class="breadcrumb-menu">
+                                <li><span>不存在此页面</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- breadcrumb-area-end -->
+
+    </main>
+{% endblock %}

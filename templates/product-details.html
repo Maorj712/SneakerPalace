@@ -1,0 +1,176 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %} 鞋宫-{{ sneaker_info.name }} {% endblock %}
+{% block custom_css %}
+    <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
+{% endblock %}
+
+{% block content %}
+    <main>
+
+        <!-- breadcrumb-area-start -->
+        <section class="breadcrumb-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- breadcrumb-area-end -->
+
+        <!-- shop-area start -->
+        <section class="shop-details-area pt-100 pb-100">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-4">
+                        <div class="product-details-img mb-10">
+                            <div class="tab-content" id="myTabContentpro">
+                                <div class="tab-pane fade show active" id="home" role="tabpanel">
+                                    <div class="product-large-img">
+                                        <img src="{{ MEDIA_URL }}{{ sneaker_info.image }}" alt="">
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="profile" role="tabpanel">
+                                    <div class="product-large-img">
+                                        <img src="{% static 'img/product/pro2.jpg' %}" alt="">
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="profile1" role="tabpanel">
+                                    <div class="product-large-img">
+                                        <img src="{% static 'img/product/pro3.jpg' %}" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-8">
+                        <div class="product-details mb-30 pl-30">
+                            <h2 class="pro-details-title mb-15">{{ sneaker_info.name }}</h2>
+                            <div class="mb-20">
+                                <span>发售价:{{ sneaker_info.retail_price }} (参考)</span>
+                            </div>
+                            <div class="product-variant">
+
+                                <div class="product-size variant-item">
+                                    <div class="variant-name">
+                                        <span>size</span>
+                                    </div>
+                                    <ul class="shop-link shop-size">
+                                        {% for size in sneaker_size %}
+                                            <li id="{{ size.id }}">
+                                                <a onclick="clickPrice({{ size.id }},{{ size.price }})">{{ size.size }} </a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+
+                                <div class="details-price mb-20 variant-item">
+                                    <span id="price">现货价格:</span>
+                                </div>
+
+                                <div class="product-info-list variant-item">
+                                    <ul>
+                                        <li><span>品牌:</span> {{ sneaker_info.brand }}</li>
+                                        <li><span>货号:</span> {{ sneaker_info.style }}</li>
+                                        <li><span>销量:</span> {{ sneaker_info.sold_nums }}</li>
+                                        <li><span>发售日期:</span> {{ sneaker_info.retail_date }}</li>
+                                        <li><span>热度:</span> {{ sneaker_info.click_nums }}</li>
+                                    </ul>
+                                </div>
+
+                                <div class="product-action-details variant-item">
+                                    <a class="{% if has_fav_product %}afav-wishlist{% else %}aproduct-wishlist{% endif %}"
+                                       id="wishlist"><i class="far fa-heart" title="Wishlist"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- shop-area end -->
+
+        <!-- product-area start -->
+        <section class="product-area pb-100">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="area-title text-center mb-50">
+                            <h2>相似商品</h2>
+                            <p>浏览更多商品</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-slider-2 owl-carousel">
+                    {% for product in same_product %}
+                        <div class="pro-item">
+                            <div class="product-wrapper">
+                                <div class="product-img mb-25">
+                                    <a href="{% url 'products:products_detail' product.style %}">
+                                        <img src="{{ MEDIA_URL }}{{ product.image }}" alt="">
+                                    </a>
+                                </div>
+                                <div class="product-content">
+                                    <h4>
+                                        <a href="product-details.html">{{ product.name }}</a>
+                                    </h4>
+                                    <div class="product-meta">
+                                        <div class="pro-price">
+                                            <span>发售价:{{ product.retail_price }} 元</span>
+                                            <span>销量:{{ product.sold_nums }} </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+        <!-- product-area end -->
+
+
+    </main>
+{% endblock %}
+
+{% block custom_js %}
+    <script type="text/javascript">
+        //点击尺码显示对应价格
+        function clickPrice(id, price) {
+            $("#price").text("现货价格:  " + price + "元");
+            $("#" + id).addClass("active").siblings().removeClass('active');
+        }
+
+        //收藏
+        function add_fav(current_elem, fav_id) {
+            $.ajax({
+                cache: false,
+                type: 'POST',
+                url: "{% url 'products:add_fav' %}",
+                data: {'fav_id': fav_id},
+                async: true,
+                beforeSend: function (xhr, settings) {
+                    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+                },
+                success: function (data) {
+                    if (data.status == 'fail') {
+                        if (data.msg == '用户未登录') {
+                            window.location.href = "{% url 'login' %}";
+                        }
+                    } else if (data.status == 'success' && data.msg == '添加收藏') {
+                        $('#wishlist').removeClass("aproduct-wishlist").addClass("afav-wishlist")
+                    } else if (data.status == 'success' && data.msg == '取消收藏') {
+                        $('#wishlist').removeClass("afav-wishlist").addClass("aproduct-wishlist")
+                    }
+                }
+            });
+        }
+
+        //收藏
+        $('#wishlist').on('click', function () {
+            add_fav($(this), {{ sneaker_info.id_in_du }});
+        });
+
+    </script>
+{% endblock %}

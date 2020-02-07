@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %} 鞋宫-忘记密码 {% endblock %}
+{% block custom_css %}
+    <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <main>
+
+        <!-- breadcrumb-area-start -->
+        <section class="breadcrumb-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- breadcrumb-area-end -->
+
+        <!-- login Area Strat-->
+        <section class="login-area pt-100 pb-100">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2">
+                        <div class="basic-login">
+                            <h3 class="text-center mb-60">忘记密码</h3>
+                            <form action="{% url 'forget' %}" method="post">
+                                <label for="email-id">邮箱 <span>**</span></label>
+                                <input name="email" id="email-id" type="text" placeholder="请输入邮箱..."/>
+                                <label for="captcha">验证码 <span>**</span></label>
+                                {{ forget_form.captcha }}
+                                <div class="errors">
+                                    {% for key,error in forget_form.errors.items %}{{ error }}{% endfor %}{{ msg }}</div>
+                                <button class="btn theme-btn-2 w-100">提交</button>
+                                {% csrf_token %}
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- login Area End-->
+
+
+    </main>
+
+{% endblock %}

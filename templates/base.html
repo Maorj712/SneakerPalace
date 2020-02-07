@@ -1,0 +1,184 @@
+{% load staticfiles %}
+<!doctype html>
+<html class="no-js" lang="zxx">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/favicon.png' %}">
+    <!-- Place favicon.ico in the root directory -->
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'css/fontawesome-all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static 'css/meanmenu.css' %}">
+    <link rel="stylesheet" href="{% static 'css/meanmenu.css' %}">
+    <link rel="stylesheet" href="{% static 'css/slick.css' %}">
+    <link rel="stylesheet" href="{% static 'css/default.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+    {% block custom_css %}{% endblock %}
+</head>
+<body>
+
+
+<!-- preloader -->
+<div id="preloader">
+    <div class="preloader">
+        <span></span>
+        <span></span>
+    </div>
+</div>
+<!-- preloader end  -->
+
+<!-- header start -->
+<header>
+    <div id="header-sticky" class="header-area box-90">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-xl-2 col-lg-6 col-md-6 col-7 col-sm-5 d-flex align-items-center pos-relative">
+                    <div class="basic-bar cat-toggle">
+                        <span class="bar1"></span>
+                        <span class="bar2"></span>
+                        <span class="bar3"></span>
+                    </div>
+                    <div class="logo">
+                        <a href="{% url 'index' %}"><img src="{% static 'img/logo/logo.png' %}" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-xl-8 col-lg-6 col-md-8 col-8 d-none d-xl-block">
+                    <div class="main-menu text-center">
+                        <nav id="mobile-menu">
+                            <ul>
+                                <li>
+                                    <a href="{% url 'index' %}">首页</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'products:products_list' %}">商品 </a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'blog:blog_list' %}">资讯</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'products:products_comparison' %}">球鞋比价</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'contact' %}">联系我们</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-lg-6 col-md-6 col-5 col-sm-7 pl-0">
+                    <div class="header-right f-right">
+                        <ul>
+                            <li class="search-btn">
+                                <a class="search-btn nav-search search-trigger" href="#" style=""><i
+                                        class="fas fa-search"></i></a>
+                            </li>
+                            {% if request.user.is_authenticated %}
+                                <li class="login-btn"><a href="{% url 'user_center' %}"><i
+                                        class="far fa-user"></i></a>
+                                    <ul class="usercenter">
+                                        <li>
+                                            <div class="quit">
+                                                <a class="red-color" href="{% url 'logout' %}">退出登录</a>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+                            {% else %}
+                                <li class="login-btn"><a href="{% url 'login' %}"><i
+                                    class="far fa-user"></i></a>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-12 d-xl-none">
+                    <div class="mobile-menu"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- header end -->
+{% block content %}
+{% endblock %}
+<!-- footer start -->
+<footer>
+    <div class="copyright-area box-105">
+        <div class="container-fluid">
+            <div class="copyright-border pt-30 pb-30">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-6">
+                        <div class="copyright text-center text-md-left">
+                            <p>本站数据来自于 <a href="http://www.flightclub.cn/">flightclub中文站</a> 、<a
+                                    href="https://www.poizon.com/">得物APP</a>，只用于学习交流，无任何商业目的。如有侵权，请联系我删除。</p>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6">
+                        <div class="footer-icon text-center text-md-right ">
+                            <p>鞋宫-球鞋潮流玩家交流地</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- footer end -->
+
+<!-- Fullscreen search -->
+<div class="search-wrap">
+    <div class="search-inner">
+        <i class="fas fa-times search-close" id="search-close"></i>
+        <div class="search-cell">
+            <div class="search-field-holder">
+                <input type="search" name="keywords" id="search_keywords" class="main-search-input"
+                       placeholder="Search Entire Store...">
+            </div>
+        </div>
+    </div>
+</div> <!-- end fullscreen search -->
+
+
+<!-- JS here -->
+<script src="{% static 'js/vendor/jquery-1.12.4.min.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+<script src="{% static 'js/isotope.pkgd.min.js' %}"></script>
+<script src="{% static 'js/one-page-nav-min.js' %}"></script>
+<script src="{% static 'js/slick.min.js' %}"></script>
+<script src="{% static 'js/jquery.meanmenu.min.js' %}"></script>
+<script src="{% static 'js/ajax-form.js' %}"></script>
+<script src="{% static 'js/wow.min.js' %}"></script>
+<script src="{% static 'js/jquery.scrollUp.min.js' %}"></script>
+<script src="{% static 'js/jquery.final-countdown.min.js' %}"></script>
+<script src="{% static 'js/imagesloaded.pkgd.min.js' %}"></script>
+<script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+<script src="{% static 'js/plugins.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+<script src="{% static 'js/jquery.lazyload.js' %}"></script>
+
+<script type="text/javascript">
+
+    $('#search_keywords').keydown(function (event) {
+
+        var keywords = $('#search_keywords').val();
+
+        if (event.keyCode == 13) {
+            url = '{% url "search" %}';
+            window.location.href = url + '?keywords=' + keywords;
+        }});
+</script>
+
+{% block custom_js %}
+{% endblock %}

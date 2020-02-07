@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %} 鞋宫-个人中心 {% endblock %}
+{% block custom_css %}
+    <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
+{% endblock %}
+
+{% block content %}
+    <body>
+    <section class="breadcrumb-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="breadcrumb-text text-center">
+                        <h1>个人中心</h1>
+                        <h2>{{ user_name }}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="cart-area pt-100 pb-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <form action="#">
+                        <div class="table-content table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="product-thumbnail">图片</th>
+                                    <th class="cart-product-name">名称</th>
+                                    <th class="product-price">发售价</th>
+                                    <th class="product-remove">取消收藏</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for sneaker in sneakers_list %}
+                                    <tr>
+                                        <td class="product-thumbnail"><a
+                                                href="{% url 'products:products_detail' sneaker.style %}"><img
+                                                src="{{ MEDIA_URL }}{{ sneaker.image }}"
+                                                alt=""></a></td>
+                                        <td class="product-name"><a
+                                                href="{% url 'products:products_detail' sneaker.style %}">{{ sneaker.name }}</a>
+                                        </td>
+                                        <td class="product-price"><span class="amount">{{ sneaker.retail_price }}</span>
+                                        </td>
+                                        <td class="product-remove"><a onclick="remove_fav({{ sneaker.id_in_du }})"><i
+                                                class="fa fa-times"></i></a></td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    </body>
+{% endblock %}
+
+{% block custom_js %}
+    <script type="text/javascript">
+        function remove_fav(fav_id) {
+            $.ajax({
+                cache: false,
+                type: 'POST',
+                url: "{% url 'products:remove_fav' %}",
+                data: {'fav_id': fav_id},
+                async: true,
+                beforeSend: function (xhr, settings) {
+                    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+                },
+                success: function () {
+                    window.location.href = "{% url 'user_center' %}"
+                }
+            });
+        }
+    </script>
+{% endblock %}

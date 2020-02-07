@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %} 鞋宫-用户注册 {% endblock %}
+{% block custom_css %}
+    <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <main>
+
+        <!-- breadcrumb-area-start -->
+        <section class="breadcrumb-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- breadcrumb-area-end -->
+
+        <!-- login Area Strat-->
+        <section class="login-area pt-100 pb-100">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2">
+                        <div class="basic-login">
+                            <h3 class="text-center mb-60">注&nbsp;&nbsp;册</h3>
+                            <form action="{% url 'register' %}" , method="post">
+                                <label for="name">用户名 <span>**</span></label>
+                                <input name="username" id="name" type="text" placeholder="请输入用户名..."/>
+                                <label for="email-id">邮箱 <span>**</span></label>
+                                <input name="email" id="email-id" type="text" placeholder="请输入邮箱..."/>
+                                <label for="pass">密码 <span>**</span></label>
+                                <input name="password" id="pass" type="password" placeholder="请输入密码..."/>
+                                <label for="pass">验证码 <span>**</span></label>
+                                {{ register_form.captcha }}
+                                <div class="errors">
+                                    {% for key,error in register_form.errors.items %}{{ error }}{% endfor %}{{ msg }}</div>
+                                <div class="mt-10"></div>
+                                <button class="btn theme-btn-2 w-100">立即注册</button>
+                                <div class="or-divide"><span>or</span></div>
+                                {% csrf_token %}
+                            </form>
+                            <a class="btn theme-btn w-100" href="{% url 'login' %}">立即登录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- login Area End-->
+
+
+    </main>
+
+{% endblock %}

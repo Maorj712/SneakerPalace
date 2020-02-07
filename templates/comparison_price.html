@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %} 鞋宫-球鞋比价 {% endblock %}
+{% block custom_css %}
+    <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
+{% endblock %}
+
+{% block content %}
+    <body>
+    <section class="breadcrumb-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="comparison-search">
+        <input type="text" id="comparison-text" class="comparison-text" placeholder="请准确输入比价球鞋的货号">
+        <input type="button" id="comparison-btn" class="comparison-btn">
+    </div>
+    <section class="cart-area pt-100 pb-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="table-content table-responsive">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th class="dewu" colspan="2"><img src="{% static 'img/dewu-logo.png' %}" alt=""
+                                                                  style="max-width: 20%"/></th>
+                                <th class="stockx" colspan="2"><img src="{% static 'img/stockx-logo.jpg' %}" alt=""
+                                                                    style="max-width: 20%"/></th>
+                            </tr>
+                            </thead>
+                            <tbody id="comparison-price">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    </body>
+{% endblock %}
+
+{% block custom_js %}
+    <script type="text/javascript">
+
+        $('#comparison-btn').click(function () {
+            var comparison_style = $('#comparison-text').val();
+            $.ajax({
+                cache: false,
+                type: 'POST',
+                url: "{% url 'products:products_comparison' %}",
+                data: {'comparison_style': comparison_style},
+                async: true,
+                beforeSend: function (xhr, settings) {
+                    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+                },
+                success: function (back_list) {
+                    var html = "";
+                    for (var i = 1; i < back_list.length; i++) {
+                        html += "<tr>";
+                        html += "<td>" + back_list[i]['dewu_size'] + "</td>";
+                        html += "<td>" + back_list[i]['dewu_price'] + "</td>";
+                        html += "<td>" + back_list[i]['stockx_size'] + "</td>";
+                        html += "<td>" + back_list[i]['stockx_price'] + "</td>";
+                        html += "</tr>";
+                    }
+                    $("#comparison-price").html(html);
+                }
+            });
+        })
+    </script>
+{% endblock %}

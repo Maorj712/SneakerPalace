@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %} 鞋宫-球鞋潮流玩家交流地 {% endblock %}
+{% block content %}
+
+    <main>
+        <!-- slider-area start -->
+        <section class="slider-area pos-relative">
+            <div class="slider-active">
+                {% for banner in all_banners %}
+                    <div class="single-slider slide-1-style slide-height d-flex align-items-center"
+                         data-background="{{ MEDIA_URL }}{{ banner.image }}">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-xl-7">
+                                    <div class="slide-content">
+                                        <div class="slide-btn">
+                                            <a class="btn theme-btn" href="{{ banner.url }}" data-animation="fadeInLeft"
+                                               data-delay=".7s">See </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+        <!-- slider-area end -->
+
+        <!-- banner area start -->
+        <section class="banner-area pt-30 pl-15 pr-15">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="banner mb-30">
+                            <a href="products/list/?sort=jordan"><img
+                                    src="{% static 'img/banner/banner-1/banner1.jpg' %}" alt=""></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="banner mb-30">
+                            <a href="products/list/?sort=nike"><img src="{% static 'img/banner/banner-1/banner2.jpg' %}"
+                                                                    alt=""></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="banner mb-30">
+                            <a href="products/list/?sort=yeezy"><img
+                                    src="{% static 'img/banner/banner-1/banner3.jpg' %}" alt=""></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- banner area end -->
+
+        <!-- product-area start -->
+        <section class="latest-blog-area pt-95 pb-60 box-90">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="area-title text-center mb-50">
+                            <h2>热门球鞋</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="product-tab-content">
+                            <div class="tab-content" id="myTabContent1">
+                                <div class="tab-pane fade show active" id="home1" role="tabpanel"
+                                     aria-labelledby="home-tab">
+                                    <div class="product-slider owl-carousel">
+                                        {% for shoe in hot_shoes %}
+                                            <div class="pro-item">
+                                                <div class="product-wrapper mb-50">
+                                                    <div class="product-img mb-25">
+                                                        <a href="{% url 'products:products_detail' shoe.style %}">
+                                                            <img src="{{ MEDIA_URL }}{{ shoe.image }}" alt="">
+                                                        </a>
+                                                    </div>
+                                                    <div class="product-content">
+                                                        <h4>
+                                                            <a href="{% url 'products:products_detail' shoe.style %}">{{ shoe.name }}</a>
+                                                        </h4>
+                                                        <div class="product-meta">
+                                                            <div class="pro-price">
+                                                                <span>发售价: {{ shoe.retail_price }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- product-area end -->
+
+        <!-- latest-blog-area start -->
+        <section class="latest-blog-area pt-95 pb-60 box-90">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="area-title text-center mb-50">
+                            <h2>最新球鞋资讯</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    {% for blog in new_blog %}
+                        <div class="col-xl-4 col-lg-6 col-md-6">
+                            <div class="latest-news mb-40">
+                                <div class="news__thumb mb-25">
+                                    <img src="{{ MEDIA_URL }}{{ blog.image }}" alt="">
+                                </div>
+                                <div class="news__caption white-bg">
+                                    <div class="news-meta mb-15">
+                                        <span><i class="far fa-calendar-check"></i> {{ blog.release_time }} </span>
+                                        <span><a><i class="far fa-comments"></i> {{ blog.click_nums }}</a></span>
+                                    </div>
+                                    <h2><a href="{% url 'blog:blog_detail' blog.id %}">{{ blog.title }}</a></h2>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+        <!-- latest-blog-area end -->
+    </main>
+
+{% endblock %}
+
+
