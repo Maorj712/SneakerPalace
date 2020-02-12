@@ -127,18 +127,18 @@ class ComparisonPriceView(View):
                         new_dict = {}
                         new_dict['dewu_size'] = 'None'
                         new_dict['dewu_price'] = 0
-                        new_dict['stockx_size'] = stockx_list[i]['size']
-                        new_dict['stockx_price'] = stockx_list[i]['price']
+                        new_dict['stockx_size'] = "US" + stockx_list[i]['size']
+                        new_dict['stockx_price'] = "$" + str(int(stockx_list[i]['price']))
                         dewu_list.append(new_dict)
-
-                    dewu_list[i]['stockx_size'] = stockx_list[i]['size']
-                    dewu_list[i]['stockx_price'] = stockx_list[i]['price']
+                    else:
+                        dewu_list[i]['stockx_size'] = "US" + stockx_list[i]['size']
+                        dewu_list[i]['stockx_price'] = "$" + str(int(stockx_list[i]['price']))
             else:
                 for j in range(0, len(dewu_list)):
                     if j > len(stockx_list) - 1:
                         break
-                    dewu_list[j]['stockx_size'] = stockx_list[j]['size']
-                    dewu_list[j]['stockx_price'] = stockx_list[j]['price']
+                    dewu_list[j]['stockx_size'] = "US" + stockx_list[j]['size']
+                    dewu_list[j]['stockx_price'] = "$" + str(int(stockx_list[j]['price']))
             back_list = dewu_list
         except:
             back_list = dewu_list
